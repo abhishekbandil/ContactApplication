@@ -1,0 +1,57 @@
+﻿@model List<EvolentHealth.Model.Contact>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        <h4>Contacts</h4>
+        @if (Model.Count == 0)
+        {
+            <div> No Contact Found</div>
+        }
+
+        @foreach (var item in Model)
+        {
+            <div>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        First Name:  @item.FirstName
+                    </dt>
+
+                    <dt>
+                        Last Name :  @item.LastName
+                    </dt>
+                    <dt>
+                       Email : @item.Email
+                    </dt>
+
+                    <dt>
+                        Phone Number : @item.PhoneNumber
+                    </dt>
+
+                    <dt>
+                        @Html.ActionLink("Edit", "EditContact", new { id = @item.Id }) |  @Html.ActionLink("Delete", "DeleteContact", new { id = @item.Id })
+                    </dt>
+
+                </dl>
+            </div>
+        }
+        
+    </div>
+    <hr />
+    <p>
+        @Html.ActionLink("Add Contact", "AddContact", new { /* id = Model.PrimaryKey */ }) 
+        
+    </p>
+</body>
+</html>
