@@ -4,8 +4,8 @@
 # 1. BAL : Contain all business logic.
 # 2. DAL : We are using Entity framework with repository pattern. 
 # 3. Model : Entity Which is required in Application
-# 4. MVC application : Web Application with dependency  Injection and Exception Filter. 
-# 5. Web Api: Web Api with dependency injection 
+# 4. MVC application : Web Application with dependency  Injection and Exception Filter, calling wep api for get respective data. 
+# 5. Web Api: Web Api with dependency injection, perform operation and return output.
 # 6. Unit Test For Mvc Application: Write test Case for Controller
 # 7. Unit Test For Web Api:  Write test Case for Api Method
 
