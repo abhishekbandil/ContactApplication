@@ -1,13 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using EvolentHealth.WebApi.Controllers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EvolentHealth.Model;
 using Moq;
-using EvolentHealth.DAL;
 using EvolentHealth.BAL.Contact;
 using System.Web.Http;
 using System.Web.Http.Results;
@@ -33,17 +27,38 @@ namespace EvolentHealth.WebApi.Controllers.Tests
             // Act
             var result = controller.Get();
 
+            var createdResult = result as OkNegotiatedContentResult<IEnumerable<Contact>>;
             //// Assert
-            //Assert.IsNotNull(result.FirstOrDefault());
-            //Assert.AreEqual(1, result.Count());
-            //Assert.AreEqual("Evolent", result.FirstOrDefault().FirstName);
+            Assert.IsNotNull(createdResult);
+            Equals(createdResult.Content, contacts);
+        }
+
+      
+
+        [TestMethod]
+        public void GetByIdNegative()
+        {
+            int id = 1;
+            var contact = new Contact { Id = 1, FirstName = "Evolent" };
+
+            var mockRepo = new Mock<IContactManager>();
+            mockRepo.Setup(x => x.GetContact(id)).Returns(contact);
+
+            // Arrange
+            ContactsController controller = new ContactsController(mockRepo.Object);
+
+            // Act
+            var result = controller.Get(3);
+            
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
         [TestMethod]
-        public void GetById()
+        public void GetByIdPositive()
         {
             int id = 1;
-            var contact = new Contact { Id =1, FirstName = "Evolent" };
+            var contact = new Contact { Id = 1, FirstName = "Evolent" };
 
             var mockRepo = new Mock<IContactManager>();
             mockRepo.Setup(x => x.GetContact(id)).Returns(contact);
@@ -54,9 +69,12 @@ namespace EvolentHealth.WebApi.Controllers.Tests
             // Act
             var result = controller.Get(1);
 
+            var createdResult = result as OkNegotiatedContentResult<Contact>;
+
             // Assert
-            //Assert.IsNotNull(result);
-            //Assert.AreEqual("Evolent", result.FirstName);
+            Assert.IsNotNull(createdResult);
+            Assert.IsNotNull(createdResult.Content);
+            Assert.AreEqual(1, createdResult.Content.Id);
         }
 
         [TestMethod]
@@ -74,6 +92,7 @@ namespace EvolentHealth.WebApi.Controllers.Tests
             IHttpActionResult actionResult = controller.Post(contact);
 
             //Assert
+            Assert.IsNotNull(actionResult);
             Assert.IsInstanceOfType(actionResult, typeof(OkResult));
 
         }
@@ -94,6 +113,7 @@ namespace EvolentHealth.WebApi.Controllers.Tests
             IHttpActionResult actionResult = controller.Put(contact);
 
             //Assert
+            Assert.IsNotNull(actionResult);
             Assert.IsInstanceOfType(actionResult, typeof(OkResult));
         }
 
@@ -113,6 +133,7 @@ namespace EvolentHealth.WebApi.Controllers.Tests
             IHttpActionResult actionResult = controller.Delete(1);
 
             //Assert
+            Assert.IsNotNull(actionResult);
             Assert.IsInstanceOfType(actionResult, typeof(OkResult));
         }
     }

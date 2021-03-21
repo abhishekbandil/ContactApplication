@@ -54,8 +54,8 @@ namespace EvolentHealth.BAL.Contact
         {
             var contact = _contactRepository.Get(c => c.Id == con.Id).FirstOrDefault();
             contact.FirstName = con.FirstName;
-            contact.LastName = con.FirstName;
-            contact.Email = con.FirstName;
+            contact.LastName = con.LastName;
+            contact.Email = con.Email;
 
             _contactRepository.Update(contact);
             _contactRepository.Save();
