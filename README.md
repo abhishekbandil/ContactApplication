@@ -9,7 +9,7 @@
 # 6. Unit Test For Mvc Application: Write test Case for Controller
 # 7. Unit Test For Web Api:  Write test Case for Api Method
 
-# In this application we have provided following feature
+# In this application we have following feature
 # 1. List Of Contact
 # 2. Add Contact
 # 3. Edit Contact
